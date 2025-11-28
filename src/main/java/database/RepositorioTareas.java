@@ -1,0 +1,140 @@
+package database;
+
+import modelo.Tarea;
+import modelo.Usuario;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class RepositorioTareas implements IRepositorio {
+    
+    //Validar login
+    @Override
+    public Usuario validarUsuario(String username, String password) {
+        String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
+        
+        try (Connection conn = ConexionBD.getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return new Usuario(
+                    rs.getInt("id"),
+                    rs.getString("username"),
+                    rs.getString("password")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al validar usuario: " + e.getMessage());
+        }
+        return null;
+    }
+    
+    //Crear tarea
+    @Override
+    public boolean crearTarea(Tarea tarea) {
+        String sql = "INSERT INTO tareas (titulo, descripcion, fecha_limite, completada, usuario_id) VALUES (?, ?, ?, ?, ?)";
+        
+        try (Connection conn = ConexionBD.getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, tarea.getTitulo());
+            pstmt.setString(2, tarea.getDescripcion());
+            pstmt.setString(3, tarea.getFechaLimite().toString());
+            pstmt.setInt(4, tarea.isCompletada() ? 1 : 0);
+            pstmt.setInt(5, tarea.getUsuarioId());
+            
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al crear tarea: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    //Obtener todas las tareas
+    @Override
+    public List<Tarea> obtenerTareasPorUsuario(int usuarioId) {
+        List<Tarea> tareas = new ArrayList<>();
+        String sql = "SELECT * FROM tareas WHERE usuario_id = ? ORDER BY fecha_limite";
+        
+        try (Connection conn = ConexionBD.getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, usuarioId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Tarea tarea = new Tarea(
+                    rs.getInt("id"),
+                    rs.getString("titulo"),
+                    rs.getString("descripcion"),
+                    LocalDate.parse(rs.getString("fecha_limite")),
+                    rs.getInt("completada") == 1,
+                    rs.getInt("usuario_id")
+                );
+                tareas.add(tarea);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener tareas: " + e.getMessage());
+        }
+        return tareas;
+    }
+    
+    //Actualizar estado de tarea
+    @Override
+    public boolean actualizarEstadoTarea(int tareaId, boolean completada) {
+        String sql = "UPDATE tareas SET completada = ? WHERE id = ?";
+        
+        try (Connection conn = ConexionBD.getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, completada ? 1 : 0);
+            pstmt.setInt(2, tareaId);
+            
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar tarea: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    //Eliminar una tarea
+    @Override
+    public boolean eliminarTarea(int tareaId) {
+        String sql = "DELETE FROM tareas WHERE id = ?";
+        
+        try (Connection conn = ConexionBD.getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, tareaId);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar tarea: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    //Actualizar tarea
+    @Override
+    public boolean actualizarTarea(Tarea tarea) {
+        String sql = "UPDATE tareas SET titulo = ?, descripcion = ?, fecha_limite = ? WHERE id = ?";
+        
+        try (Connection conn = ConexionBD.getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, tarea.getTitulo());
+            pstmt.setString(2, tarea.getDescripcion());
+            pstmt.setString(3, tarea.getFechaLimite().toString());
+            pstmt.setInt(4, tarea.getId());
+            
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar tarea: " + e.getMessage());
+            return false;
+        }
+    }
+}
