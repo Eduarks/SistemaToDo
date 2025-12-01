@@ -34,6 +34,45 @@ public class RepositorioTareas implements IRepositorio {
         return null;
     }
     
+    @Override
+    public boolean registrarUsuario(String username, String password) {
+    // Verificar si el usuario ya existe
+    String sqlVerificar = "SELECT COUNT(*) FROM usuarios WHERE username = ?";
+    
+    try (Connection conn = ConexionBD.getConexion();
+         PreparedStatement pstmtVerificar = conn.prepareStatement(sqlVerificar)) {
+        
+        pstmtVerificar.setString(1, username);
+        ResultSet rs = pstmtVerificar.executeQuery();
+        
+        if (rs.next() && rs.getInt(1) > 0) {
+            return false; // Usuario ya existe
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al verificar usuario: " + e.getMessage());
+        return false;
+    }
+    
+    // Encriptación básica (Base64)
+    String passwordEncriptada = java.util.Base64.getEncoder()
+        .encodeToString(password.getBytes());
+    
+    // Insertar nuevo usuario
+    String sqlInsertar = "INSERT INTO usuarios (username, password) VALUES (?, ?)";
+    
+    try (Connection conn = ConexionBD.getConexion();
+         PreparedStatement pstmtInsertar = conn.prepareStatement(sqlInsertar)) {
+        
+        pstmtInsertar.setString(1, username);
+        pstmtInsertar.setString(2, passwordEncriptada);
+        
+        return pstmtInsertar.executeUpdate() > 0;
+    } catch (SQLException e) {
+        System.err.println("Error al registrar usuario: " + e.getMessage());
+        return false;
+    }
+}
+    
     //Crear tarea
     @Override
     public boolean crearTarea(Tarea tarea) {
