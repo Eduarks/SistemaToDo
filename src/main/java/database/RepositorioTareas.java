@@ -137,4 +137,68 @@ public class RepositorioTareas implements IRepositorio {
             return false;
         }
     }
+    
+    @Override
+    public List<Tarea> buscarTareasPorTexto(int usuarioId, String texto) {
+        List<Tarea> tareas = new ArrayList<>();
+        String sql = "SELECT * FROM tareas WHERE usuario_id = ? " +
+                 "AND (titulo LIKE ? OR descripcion LIKE ?) " +
+                 "ORDER BY fecha_limite";
+    
+        try (Connection conn = ConexionBD.getConexion();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+            pstmt.setInt(1, usuarioId);
+            pstmt.setString(2, "%" + texto + "%");
+            pstmt.setString(3, "%" + texto + "%");
+        
+            ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            Tarea tarea = new Tarea(
+                rs.getInt("id"),
+                rs.getString("titulo"),
+                rs.getString("descripcion"),
+                LocalDate.parse(rs.getString("fecha_limite")),
+                rs.getInt("completada") == 1,
+                rs.getInt("usuario_id")
+            );
+            tareas.add(tarea);
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al buscar tareas: " + e.getMessage());
+    }
+    return tareas;
+}
+
+    @Override
+    public List<Tarea> filtrarTareasPorEstado(int usuarioId, boolean completadas) {
+        List<Tarea> tareas = new ArrayList<>();
+        String sql = "SELECT * FROM tareas WHERE usuario_id = ? AND completada = ? " +
+                 "ORDER BY fecha_limite";
+    
+        try (Connection conn = ConexionBD.getConexion();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+            pstmt.setInt(1, usuarioId);
+            pstmt.setInt(2, completadas ? 1 : 0);
+        
+            ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            Tarea tarea = new Tarea(
+                rs.getInt("id"),
+                rs.getString("titulo"),
+                rs.getString("descripcion"),
+                LocalDate.parse(rs.getString("fecha_limite")),
+                rs.getInt("completada") == 1,
+                rs.getInt("usuario_id")
+            );
+            tareas.add(tarea);
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al filtrar tareas: " + e.getMessage());
+    }
+    return tareas;
+}
 }

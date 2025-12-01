@@ -65,7 +65,7 @@ public class LoginFrame extends javax.swing.JFrame {
         btnIngresar.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");
-        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnIngresar.setFocusPainted(false);
         btnIngresar.setPreferredSize(new java.awt.Dimension(150, 40));
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -79,7 +79,7 @@ public class LoginFrame extends javax.swing.JFrame {
         btnSalir.setForeground(new java.awt.Color(51, 51, 51));
         btnSalir.setText("Salir");
         btnSalir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 1, true));
-        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnSalir.setFocusPainted(false);
         btnSalir.setPreferredSize(new java.awt.Dimension(150, 40));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
