@@ -514,13 +514,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     "Tareas exportadas exitosamente en:\n" + rutaArchivo, 
                     "Éxito", 
                     JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, 
-                    "Error al exportar las tareas", 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
+            } 
             }
         }
+        
+        
+        
     }//GEN-LAST:event_btnExportarActionPerformed
 
     public void actualizarTabla() {
