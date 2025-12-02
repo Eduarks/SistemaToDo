@@ -521,9 +521,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             }
         }
-        
-        
-        
+        //Comentario de prueba
     }//GEN-LAST:event_btnExportarActionPerformed
 
     public void actualizarTabla() {
