@@ -53,12 +53,6 @@ public class ConexionBD {
     }
     
     public static void cerrarConexion() {
-        try {
-            if (conexion != null && !conexion.isClosed()) {
-                conexion.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al cerrar conexión: " + e.getMessage());
-        }
+
     }
 }
