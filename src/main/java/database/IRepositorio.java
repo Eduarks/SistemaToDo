@@ -15,4 +15,5 @@ public interface IRepositorio {
     boolean actualizarTarea(Tarea tarea);
     List<Tarea> buscarTareasPorTexto(int usuarioId, String texto);
     List<Tarea> filtrarTareasPorEstado(int usuarioId, boolean completadas);
+    
 }
