@@ -11,6 +11,9 @@ import modelo.Usuario;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import util.ExportadorTareas;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PrincipalFrame extends javax.swing.JFrame {
     
@@ -153,6 +156,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cmbFiltro = new javax.swing.JComboBox<>();
         btnLimpiarFiltros = new javax.swing.JButton();
+        btnExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -265,6 +269,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
 
+        btnExportar.setBackground(new java.awt.Color(25, 141, 25));
+        btnExportar.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
+        btnExportar.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportar.setText("Exportar Tareas");
+        btnExportar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 1, true));
+        btnExportar.setPreferredSize(new java.awt.Dimension(154, 30));
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -280,30 +296,31 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNuevaTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCompletada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)))
-                        .addComponent(btnLimpiarFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnNuevaTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnCompletada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(8, 8, 8)
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnLimpiarFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -331,19 +348,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(btnLimpiarFiltros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevaTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaTareaActionPerformed
-       FormularioTareaFrame formulario = new FormularioTareaFrame(this, usuarioActual, null);
+        FormularioTareaFrame formulario = new FormularioTareaFrame(this, usuarioActual, null);
         formulario.setVisible(true);
     }//GEN-LAST:event_btnNuevaTareaActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-                int filaSeleccionada = tablaTareas.getSelectedRow();
+        int filaSeleccionada = tablaTareas.getSelectedRow();
         
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una tarea", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -368,7 +387,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-                int filaSeleccionada = tablaTareas.getSelectedRow();
+        int filaSeleccionada = tablaTareas.getSelectedRow();
         
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una tarea", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -393,7 +412,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCompletadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompletadaActionPerformed
-                int filaSeleccionada = tablaTareas.getSelectedRow();
+        int filaSeleccionada = tablaTareas.getSelectedRow();
         
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una tarea", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -431,6 +450,77 @@ public class PrincipalFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarFiltrosActionPerformed
 
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+            List<Tarea> tareas = repositorio.obtenerTareasPorUsuario(usuarioActual.getId());
+
+        if (tareas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "No hay tareas para exportar", 
+                "Aviso", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Diálogo para elegir formato
+        String[] opciones = {"CSV", "TXT", "Cancelar"};
+        int formato = JOptionPane.showOptionDialog(this,
+            "¿En qué formato desea exportar?",
+            "Elegir formato",
+            JOptionPane.YES_NO_CANCEL_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opciones,
+            opciones[0]);
+
+        if (formato == 2 || formato == JOptionPane.CLOSED_OPTION) {
+            return; // Cancelar
+        }
+
+        // Selector de archivo
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar archivo");
+
+        if (formato == 0) { // CSV
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Archivo CSV", "csv"));
+            fileChooser.setSelectedFile(new java.io.File("mis_tareas.csv"));
+        } else { // TXT
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Archivo de texto", "txt"));
+            fileChooser.setSelectedFile(new java.io.File("mis_tareas.txt"));
+        }
+
+        int resultado = fileChooser.showSaveDialog(this);
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
+
+            // Agregar extensión si no la tiene
+            if (formato == 0 && !rutaArchivo.endsWith(".csv")) {
+                rutaArchivo += ".csv";
+            } else if (formato == 1 && !rutaArchivo.endsWith(".txt")) {
+                rutaArchivo += ".txt";
+            }
+
+            boolean exito;
+            if (formato == 0) {
+                exito = ExportadorTareas.exportarCSV(tareas, rutaArchivo);
+            } else {
+                exito = ExportadorTareas.exportarTXT(tareas, rutaArchivo);
+            }
+
+            if (exito) {
+                JOptionPane.showMessageDialog(this, 
+                    "Tareas exportadas exitosamente en:\n" + rutaArchivo, 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "Error al exportar las tareas", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnExportarActionPerformed
+
     public void actualizarTabla() {
         cargarTareas();
     }
@@ -443,6 +533,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnCompletada;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnLimpiarFiltros;
     private javax.swing.JButton btnNuevaTarea;
     private javax.swing.JComboBox<String> cmbFiltro;
