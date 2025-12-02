@@ -12,21 +12,37 @@ public class RepositorioTareas implements IRepositorio {
     //Validar login
     @Override
     public Usuario validarUsuario(String username, String password) {
-        String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
-        
+        String sql = "SELECT * FROM usuarios WHERE username = ?";
+    
         try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
             ResultSet rs = pstmt.executeQuery();
-            
+        
             if (rs.next()) {
-                return new Usuario(
-                    rs.getInt("id"),
-                    rs.getString("username"),
-                    rs.getString("password")
-                );
+                String passwordBD = rs.getString("password");
+            
+                // Intentar comparar directamente (texto plano)
+                if (passwordBD.equals(password)) {
+                    return new Usuario(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        passwordBD
+                    );
+                }
+            
+                // Intentar comparar con Base64 (encriptada)
+                String passwordEncriptada = java.util.Base64.getEncoder()
+                .encodeToString(password.getBytes());
+            
+                if (passwordBD.equals(passwordEncriptada)) {
+                    return new Usuario(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        passwordBD
+                    );
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error al validar usuario: " + e.getMessage());

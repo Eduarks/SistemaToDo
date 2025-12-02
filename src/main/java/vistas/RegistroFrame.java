@@ -155,17 +155,23 @@ public class RegistroFrame extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         String username = txtUsuario.getText().trim();
-        String password = new String(txtPasswordConfirmar.getPassword());
-        String passwordConfirmar = new String(txtPasswordConfirmar.getPassword());
+        String password = new String(txtPassword.getPassword()).trim();
+        String passwordConfirmar = new String(txtPasswordConfirmar.getPassword()).trim();
 
-        if (username.isEmpty() || password.isEmpty()) {
+        // ========================================
+        // VALIDACIONES
+        // ========================================
+
+        // 1. Validar que no haya campos vacíos
+        if (username.isEmpty() || password.isEmpty() || passwordConfirmar.isEmpty()) {
             JOptionPane.showMessageDialog(this, 
                 "Por favor complete todos los campos", 
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
+        // 2. Validar longitud mínima de usuario
         if (username.length() < 4) {
             JOptionPane.showMessageDialog(this, 
                 "El usuario debe tener al menos 4 caracteres", 
@@ -173,7 +179,8 @@ public class RegistroFrame extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
+        // 3. Validar longitud mínima de contraseña
         if (password.length() < 6) {
             JOptionPane.showMessageDialog(this, 
                 "La contraseña debe tener al menos 6 caracteres", 
@@ -181,30 +188,47 @@ public class RegistroFrame extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
+        // 4. VALIDAR QUE LAS CONTRASEÑAS COINCIDAN
         if (!password.equals(passwordConfirmar)) {
             JOptionPane.showMessageDialog(this, 
                 "Las contraseñas no coinciden", 
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
+
+            // Limpiar campos de contraseña para que vuelva a intentar
+            txtPassword.setText("");
+            txtPasswordConfirmar.setText("");
+            txtPassword.requestFocus(); // Poner cursor en contraseña
             return;
         }
 
+        // ========================================
+        // INTENTAR REGISTRAR
+        // ========================================
+
+        // IMPORTANTE: Usar 'password', NO 'passwordConfirmar'
         if (repositorio.registrarUsuario(username, password)) {
             JOptionPane.showMessageDialog(this, 
-                "Usuario registrado exitosamente. Ahora puede iniciar sesión.", 
-                "Éxito", 
+                "¡Usuario registrado exitosamente!\n\nAhora puede iniciar sesión con:\n" +
+                "Usuario: " + username + "\n" +
+                "Contraseña: (la que ingresó)", 
+                "Registro Exitoso", 
                 JOptionPane.INFORMATION_MESSAGE);
-            
+
             // Volver al login
             LoginFrame login = new LoginFrame();
             login.setVisible(true);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, 
-                "El usuario ya existe. Por favor elija otro nombre.", 
-                "Error", 
+                "El usuario '" + username + "' ya existe.\n\nPor favor elija otro nombre de usuario.", 
+                "Usuario Duplicado", 
                 JOptionPane.ERROR_MESSAGE);
+
+            // Limpiar solo el campo de usuario para que pueda escribir otro
+            txtUsuario.setText("");
+            txtUsuario.requestFocus();
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
