@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.mycompany.gestortareas_t2"},{"l":"database"},{"l":"modelo"},{"l":"util"},{"l":"vistas"}];updateSearchResults();

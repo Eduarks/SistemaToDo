@@ -1,0 +1,60 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+-classpath
+'/home/eduarks/.m2/repository/org/xerial/sqlite-jdbc/3.45.0.0/sqlite-jdbc-3.45.0.0.jar:/home/eduarks/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/eduarks/.m2/repository/com/formdev/flatlaf/3.2.5/flatlaf-3.2.5.jar:/home/eduarks/.m2/repository/com/toedter/jcalendar/1.4/jcalendar-1.4.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'21'
+-sourcepath
+'/home/eduarks/Descargas/t2_evo/GestorTareas_Final/src/main/java:/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'GestorTareas_t2 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'GestorTareas_t2 1.0-SNAPSHOT API'
+database
+modelo
+vistas
+com.mycompany.gestortareas_t2
+util
+/home/eduarks/.m2/repository/org/xerial/sqlite-jdbc/3.45.0.0/sqlite-jdbc-3.45.0.0.jar = 1705636516000
+/home/eduarks/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar = 1644327230000
+/home/eduarks/.m2/repository/com/formdev/flatlaf/3.2.5/flatlaf-3.2.5.jar = 1697925709000
+/home/eduarks/.m2/repository/com/toedter/jcalendar/1.4/jcalendar-1.4.jar = 1378300539000
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/src/main/java = 1764634384433
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/generated-sources/annotations = 1764635342411
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/link.svg = 1764635346514
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/allpackages-index.html = 1764635346491
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/module-search-index.js = 1764635346491
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/tag-search-index.js = 1764635346494
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/type-search-index.js = 1764635346493
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/overview-tree.html = 1764635346474
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/overview-summary.html = 1764635346506
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/help-doc.html = 1764635346510
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/package-search-index.js = 1764635346493
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/allclasses-index.html = 1764635346489
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/script.js = 1764635346512
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/search-page.js = 1764635346514
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/search.js = 1764635346514
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/serialized-form.html = 1764635346426
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/copy.svg = 1764635346512
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/member-search-index.js = 1764635346493
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/index.html = 1764635346477
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/index-all.html = 1764635346503
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/search.html = 1764635346505
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/element-list = 1764635346361
+/home/eduarks/Descargas/t2_evo/GestorTareas_Final/target/reports/apidocs/stylesheet.css = 1764635346511

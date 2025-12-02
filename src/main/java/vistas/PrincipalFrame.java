@@ -524,9 +524,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void actualizarTabla() {
         cargarTareas();
     }
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;

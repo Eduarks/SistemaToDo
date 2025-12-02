@@ -292,11 +292,6 @@ public class FormularioTareaFrame extends javax.swing.JFrame {
     private void txtFechaLimiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaLimiteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaLimiteActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-// Variable para el selector de fecha (fuera de la zona protegida)
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
