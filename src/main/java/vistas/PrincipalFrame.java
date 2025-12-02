@@ -251,7 +251,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Filtrar:");
 
-        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Pendientes", "Completadas" }));
         cmbFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbFiltroActionPerformed(evt);
@@ -447,7 +447,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbFiltroActionPerformed
 
     private void btnLimpiarFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarFiltrosActionPerformed
-        // TODO add your handling code here:
+        txtBuscar.setText("");
+        cmbFiltro.setSelectedIndex(0);
+        cargarTareas();
     }//GEN-LAST:event_btnLimpiarFiltrosActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
