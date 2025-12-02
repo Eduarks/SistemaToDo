@@ -34,6 +34,45 @@ public class RepositorioTareas implements IRepositorio {
         return null;
     }
     
+    @Override
+    public boolean registrarUsuario(String username, String password) {
+    // Verificar si el usuario ya existe
+    String sqlVerificar = "SELECT COUNT(*) FROM usuarios WHERE username = ?";
+    
+    try (Connection conn = ConexionBD.getConexion();
+         PreparedStatement pstmtVerificar = conn.prepareStatement(sqlVerificar)) {
+        
+        pstmtVerificar.setString(1, username);
+        ResultSet rs = pstmtVerificar.executeQuery();
+        
+        if (rs.next() && rs.getInt(1) > 0) {
+            return false; // Usuario ya existe
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al verificar usuario: " + e.getMessage());
+        return false;
+    }
+    
+    // Encriptación básica (Base64)
+    String passwordEncriptada = java.util.Base64.getEncoder()
+        .encodeToString(password.getBytes());
+    
+    // Insertar nuevo usuario
+    String sqlInsertar = "INSERT INTO usuarios (username, password) VALUES (?, ?)";
+    
+    try (Connection conn = ConexionBD.getConexion();
+         PreparedStatement pstmtInsertar = conn.prepareStatement(sqlInsertar)) {
+        
+        pstmtInsertar.setString(1, username);
+        pstmtInsertar.setString(2, passwordEncriptada);
+        
+        return pstmtInsertar.executeUpdate() > 0;
+    } catch (SQLException e) {
+        System.err.println("Error al registrar usuario: " + e.getMessage());
+        return false;
+    }
+}
+    
     //Crear tarea
     @Override
     public boolean crearTarea(Tarea tarea) {
@@ -137,4 +176,68 @@ public class RepositorioTareas implements IRepositorio {
             return false;
         }
     }
+    
+    @Override
+    public List<Tarea> buscarTareasPorTexto(int usuarioId, String texto) {
+        List<Tarea> tareas = new ArrayList<>();
+        String sql = "SELECT * FROM tareas WHERE usuario_id = ? " +
+                 "AND (titulo LIKE ? OR descripcion LIKE ?) " +
+                 "ORDER BY fecha_limite";
+    
+        try (Connection conn = ConexionBD.getConexion();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+            pstmt.setInt(1, usuarioId);
+            pstmt.setString(2, "%" + texto + "%");
+            pstmt.setString(3, "%" + texto + "%");
+        
+            ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            Tarea tarea = new Tarea(
+                rs.getInt("id"),
+                rs.getString("titulo"),
+                rs.getString("descripcion"),
+                LocalDate.parse(rs.getString("fecha_limite")),
+                rs.getInt("completada") == 1,
+                rs.getInt("usuario_id")
+            );
+            tareas.add(tarea);
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al buscar tareas: " + e.getMessage());
+    }
+    return tareas;
+}
+
+    @Override
+    public List<Tarea> filtrarTareasPorEstado(int usuarioId, boolean completadas) {
+        List<Tarea> tareas = new ArrayList<>();
+        String sql = "SELECT * FROM tareas WHERE usuario_id = ? AND completada = ? " +
+                 "ORDER BY fecha_limite";
+    
+        try (Connection conn = ConexionBD.getConexion();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+            pstmt.setInt(1, usuarioId);
+            pstmt.setInt(2, completadas ? 1 : 0);
+        
+            ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next()) {
+            Tarea tarea = new Tarea(
+                rs.getInt("id"),
+                rs.getString("titulo"),
+                rs.getString("descripcion"),
+                LocalDate.parse(rs.getString("fecha_limite")),
+                rs.getInt("completada") == 1,
+                rs.getInt("usuario_id")
+            );
+            tareas.add(tarea);
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al filtrar tareas: " + e.getMessage());
+    }
+    return tareas;
+}
 }

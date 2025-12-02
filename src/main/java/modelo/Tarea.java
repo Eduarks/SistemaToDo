@@ -9,7 +9,7 @@ public class Tarea {
     private LocalDate fechaLimite;
     private boolean completada;
     private int usuarioId;
-    
+      
     public Tarea() {
     }
     
