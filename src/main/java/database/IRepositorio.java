@@ -13,4 +13,6 @@ public interface IRepositorio {
     boolean actualizarEstadoTarea(int tareaId, boolean completada);
     boolean eliminarTarea(int tareaId);
     boolean actualizarTarea(Tarea tarea);
+    List<Tarea> buscarTareasPorTexto(int usuarioId, String texto);
+    List<Tarea> filtrarTareasPorEstado(int usuarioId, boolean completadas);
 }
